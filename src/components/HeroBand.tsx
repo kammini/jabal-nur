@@ -25,7 +25,7 @@ export default function HeroBand() {
         ) : (
           <>
             <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1">
-              Welcome to MoscheFinder
+              Welcome to Jabal-Nur
             </p>
             <p className="font-amiri text-2xl text-white leading-tight mb-0.5">
               Your{" "}

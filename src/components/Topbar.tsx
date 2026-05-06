@@ -24,7 +24,7 @@ export default function Topbar() {
         {/* Logo */}
         <div className="flex items-center gap-2 font-amiri text-xl text-white">
           <i className="ti ti-building-mosque text-gold-400 text-xl" aria-hidden />
-          MoscheFinder
+          Jabal-Nur
         </div>
 
         {/* Nav links */}

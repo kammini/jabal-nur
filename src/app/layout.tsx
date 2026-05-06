@@ -3,7 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 
 export const metadata: Metadata = {
-  title: "MoscheFinder — Your Islamic Companion",
+  title: "Jabal-Nur — Your Islamic Companion",
   description: "Find mosques, read Quran, track prayer times and more.",
 };
 
