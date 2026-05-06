@@ -3,7 +3,7 @@
 import Topbar from "@/components/Topbar";
 import Sidebar from "@/components/Sidebar";
 import HeroBand from "@/components/HeroBand";
-import PrayerRow from "@/components/PrayerRow";
+import PrayerTimes from "@/components/PrayerTimes";
 import SearchBar from "@/components/SearchBar";
 import FeatureCards from "@/components/FeatureCards";
 import NearbyMosques from "@/components/NearbyMosques";
@@ -25,7 +25,7 @@ export default function HomePage() {
 
         <main className="flex-1 p-5 overflow-auto">
           <HeroBand />
-          <PrayerRow />
+          <PrayerTimes />
           <SearchBar />
           <ContinueReading />
           <FeatureCards />
