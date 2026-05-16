@@ -1,30 +1,29 @@
-"use client";
+"use client"
 
 import { useEffect, useState } from "react";
-import PrayerRow from "./PrayerRow";
-import { markStatus } from "../lib/markStatus"
 import type { PrayerTime } from "@/types";
+import { markStatus } from "@/lib/markStatus";
 
-export default function PrayerTimes(){
+export function usePrayerTimes() {
   const [data, setData] = useState<{
-    times: PrayerTime[];
-    location: string;
+    times: PrayerTime[],
+    location: string,
     hijri: string;
-    error: boolean;
+    error: boolean
   }>({
     times: [],
     location: "",
     hijri: "",
     error: false,
-  });
-
+  })
+  
   useEffect(() => {
     const fetchData = async (lat: number, lon: number) => {
       try {
         // Fetch Prayer Times
         const prayerRes = await fetch(
           `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`
-        );
+        )
         const prayerData = await prayerRes.json();
         const t = prayerData.data.timings;
         const h = prayerData.data.date.hijri;
@@ -32,7 +31,7 @@ export default function PrayerTimes(){
         // Fetch Location Name (Reverse Geocoding)
         const geoRes = await fetch(
           `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
-        );
+        )
         const geoData = await geoRes.json();
         const city = geoData.city || geoData.locality || "Unknown Location";
 
@@ -42,41 +41,30 @@ export default function PrayerTimes(){
           { name: "Asr", time: t.Asr },
           { name: "Maghrib", time: t.Maghrib },
           { name: "Isha", time: t.Isha },
-        ];
+        ]
 
         setData({
           times: markStatus(formatted),
           location: city,
           hijri: `${h.day} ${h.month.en} ${h.year}`,
-          error: false,
-        });
+          error: false
+        })
       } catch (err) {
         console.error("Failed to fetch prayer times", err);
         setData(prev => ({ ...prev, error: true }));
       }
-    };
+    }
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        fetchData(pos.coords.latitude, pos.coords.longitude);
+        fetchData(pos.coords.latitude, pos.coords.longitude)
       },
       (err) => {
         console.error("Geolocation error:", err);
-        setData(prev => ({ ...prev, error: true }));
+        setData(prev => ({...prev, error: true}))
       }
-    );
-  }, []);
+    )
+  }, [])
 
-  if (data.times.length === 0 && !data.error) {
-    return <div className="animate-pulse h-24 bg-gray-100 rounded-lg mb-4" />;
-  }
-
-  return (
-    <PrayerRow 
-      times={data.times} 
-      location={data.location} 
-      hijri={data.hijri} 
-      locationError={data.error} 
-    />
-  );
+  return data;
 }

@@ -3,7 +3,7 @@
 import Topbar from "@/components/Topbar";
 import Sidebar from "@/components/Sidebar";
 import HeroBand from "@/components/HeroBand";
-import PrayerTimes from "@/components/PrayerTimes";
+import PrayerRow from "@/components/PrayerRow";
 import SearchBar from "@/components/SearchBar";
 import FeatureCards from "@/components/FeatureCards";
 import NearbyMosques from "@/components/NearbyMosques";
@@ -12,9 +12,11 @@ import SavedMosques from "@/components/SavedMosques";
 import ContinueReading from "@/components/ContinueReading";
 import LockedSection from "@/components/LockedSection";
 import { useAuth } from "@/lib/auth-context";
+import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 
 export default function HomePage() {
   const { user } = useAuth();
+  const prayerData = usePrayerTimes();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -25,7 +27,14 @@ export default function HomePage() {
 
         <main className="flex-1 p-5 overflow-auto">
           <HeroBand />
-          <PrayerTimes />
+          {(prayerData.times.length === 0 && !prayerData.error) && <div className="animate-pulse h-24 bg-gray-100 rounded-lg mb-4"/> ||
+            <PrayerRow 
+            times={prayerData.times}
+            location={prayerData.location} 
+            hijri={prayerData.hijri} 
+            locationError={prayerData.error} 
+            />
+          }
           <SearchBar />
           <ContinueReading />
           <FeatureCards />
